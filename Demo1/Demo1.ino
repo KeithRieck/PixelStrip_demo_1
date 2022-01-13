@@ -1,5 +1,6 @@
 #include <PixelStrip.h>
 #include "SparkAnimation.h"
+#include "FlowerAnimation.h"
 #include "PulseAnimation.h"
 
 const int BRIGHTNESS = 128;
@@ -24,7 +25,7 @@ void setup() {
   animation1 = new SparkAnimation();
   strip[0]->setAnimation(animation1);
 
-  animation2 = new SparkAnimation();
+  animation2 = new FlowerAnimation();
   strip[1]->setAnimation(animation2);
 
   animation3 = new PulseAnimation(2);
