@@ -1,7 +1,6 @@
 #include "SparkAnimation.h"
 
 void SparkAnimation::reset(PixelStrip *strip) {
-  black = 0x000000;
   currentPixel = 0;
   waitTime = 1000.0 / strip->numPixels();
   setTimeout(waitTime);
@@ -10,9 +9,12 @@ void SparkAnimation::reset(PixelStrip *strip) {
 
 void SparkAnimation::draw(PixelStrip *strip) {
   if (isTimedout()) {
-    strip->setPixelColor(currentPixel, black);
+    int j = 0;
+    for (int i = 0; i<COLOR_LIST_SIZE; i++) {
+      j = (currentPixel + strip->numPixels() - i) % strip->numPixels();
+      strip->setPixelColor(j, colorList[i]);
+    }
     currentPixel = (currentPixel + 1) % strip->numPixels();
-    strip->setPixelColor(currentPixel, 0x880000);
     setTimeout(waitTime);
   }
 }

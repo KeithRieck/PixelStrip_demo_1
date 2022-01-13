@@ -3,41 +3,41 @@
 #include "PulseAnimation.h"
 
 const int BRIGHTNESS = 128;
+const int NUM_PIXELSTRIPS = 3;
 
-PixelStrip *strip1 = new PixelStrip((new NEOPIXEL<7>), 12);
-PixelStrip *strip2 = new PixelStrip((new NEOPIXEL<6>), 12);
-PixelStrip *strip3 = new PixelStrip((new NEOPIXEL<5>), 8);
+PixelStrip *strip[NUM_PIXELSTRIPS];
+
 Animation *animation1, *animation2;
 PulseAnimation *animation3;
 
 void setup() {
+  strip[0] = new PixelStrip((new NEOPIXEL<7>), 12);
+  strip[1] =  new PixelStrip((new NEOPIXEL<6>), 7);
+  strip[2] =  new PixelStrip((new NEOPIXEL<5>), 8);
+
+  for (int i = 0; i < NUM_PIXELSTRIPS; i++) {
+    strip[i]->setup();
+    strip[i]->setBrightness(BRIGHTNESS);
+    strip[i]->clear();
+  }
+
   animation1 = new SparkAnimation();
-  strip1->setup();
-  strip1->clear();
-  strip1->setBrightness(BRIGHTNESS);
-  strip1->setAnimation(animation1);
+  strip[0]->setAnimation(animation1);
 
   animation2 = new SparkAnimation();
-  strip2->setup();
-  strip2->clear();
-  strip2->setBrightness(BRIGHTNESS);
-  strip2->setAnimation(animation2);
+  strip[1]->setAnimation(animation2);
 
   animation3 = new PulseAnimation(2);
   animation3->setColor(0, 0x0000CC);
   animation3->setColor(1, 0xCC0000);
-  strip3->setup();
-  strip3->clear();
-  strip3->setBrightness(BRIGHTNESS);
-  strip3->setAnimation(animation3);
+  strip[2]->setBrightness(BRIGHTNESS);
+  strip[2]->setAnimation(animation3);
 }
 
 void loop() {
-  strip1->draw();
-  strip2->draw();
-  strip3->draw();
-  strip1->show();
-  strip2->show();
-  strip3->show();
+  for (int i = 0; i < NUM_PIXELSTRIPS; i++) {
+    strip[i]->draw();
+    strip[i]->show();
+  }
   delay(10);
 }
